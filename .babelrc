@@ -1,0 +1,19 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+      }
+    }],
+    "stage-2"
+  ],
+  "plugins": [
+        "transform-vue-jsx", "transform-runtime",
+        // ["import", { "libraryName": "ant-design-vue", "libraryDirectory": "es", "style": "css" }],
+        // ["import", {"libraryName": "iview","libraryDirectory": "src/components"}]
+    ],
+    "ignore":[//配置不需要转化的文件
+        // "jquery.js",
+    ]
+}

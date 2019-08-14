@@ -19,7 +19,7 @@ Vue.prototype.ports = ports
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: '#views',
   router,
   store,  //将store暴露出来
   components: { App },

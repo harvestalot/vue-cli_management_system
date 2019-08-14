@@ -1,33 +1,65 @@
 <template>
-    <div>
-        <Layout>
-            <Sider breakpoint="md" collapsible :collapsed-width="78" v-model="isCollapsed">
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem name="1-1">
-                        <Icon type="ios-navigate"></Icon>
-                        <span>Option 1</span>
-                    </MenuItem>
-                    <MenuItem name="1-2">
-                        <Icon type="ios-search"></Icon>
-                        <span>Option 2</span>
-                    </MenuItem>
-                    <MenuItem name="1-3">
-                        <Icon type="ios-settings"></Icon>
-                        <span>Option 3</span>
-                    </MenuItem>
-                </Menu>
-                <div slot="trigger"></div>
-            </Sider>
+    <div class="h_100">
+        <Layout class="h_100">
+            <Header>
+                <Row>
+                    <Col span="4">s</Col>
+                    <Col span="20">
+                        <Menu mode="horizontal" theme="dark" active-name="1">
+                            <div class="layout-logo"></div>
+                            <div class="layout-nav">
+                                <MenuItem name="1">
+                                    <Icon type="ios-navigate"></Icon>
+                                    <router-link to="/login">登录</router-link>
+                                </MenuItem>
+                                <MenuItem name="2">
+                                    <Icon type="ios-keypad"></Icon>
+                                    <router-link to="/view">首页</router-link>
+                                </MenuItem>
+                                <MenuItem name="3">
+                                    <Icon type="ios-analytics"></Icon>
+                                    <router-link to="/view/audit">订单审核</router-link>
+                                </MenuItem>
+                                <MenuItem name="4">
+                                    <Icon type="ios-paper"></Icon>
+                                    Item 4
+                                </MenuItem>
+                            </div>
+                        </Menu>
+                    </Col>
+                </Row>
+            </Header>
             <Layout>
-                <Header class="layout-header-bar">
-                    <router-link to="/login">登录</router-link>
-                    <router-link to="/view">首页</router-link>
-                    <router-link to="/view/audit">订单审核</router-link>
-                    <Button type="primary">随心主题</Button>
-                </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '220px'}">
-                    <router-view/>
-                   <div class="hello">
+                <Sider breakpoint="md" collapsible :collapsed-width="78" v-model="isCollapsed">
+                    <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
+                        <MenuItem name="1-1">
+                            <Icon type="ios-navigate"></Icon>
+                            <span>Option 1</span>
+                        </MenuItem>
+                        <MenuItem name="1-2">
+                            <Icon type="ios-search"></Icon>
+                            <span>Option 2</span>
+                        </MenuItem>
+                        <MenuItem name="1-3">
+                            <Icon type="ios-settings"></Icon>
+                            <span>Option 3</span>
+                        </MenuItem>
+                    </Menu>
+                    <div slot="trigger"></div>
+                </Sider>
+                <Content :style="{margin: '20px 20px'}">
+                    <section class="tag_views">
+                        <Tag type="dot" 
+                            closable
+                            checkable
+                            @on-change="tag_change_state"
+                            color="primary"
+                            v-for="(item,index) in tag_list" :key="index"><router-link :to="item.router_url">{{ item.name }}</router-link></Tag>
+                    </section>
+                    <section :style="{  background: '#fff', minHeight: '500px' }">
+                        <router-view/>
+                    </section>
+                   <!-- <div class="hello">
                         <ul class="shop_container">
                         <li v-for="item in goods" :key="item.id" class="shop_container_li">
                             <div class="shop_img">
@@ -53,7 +85,7 @@
                             <span>去结账：{{totalNum}}</span>
                         </div>
                         </div>
-                    </div>
+                    </div> -->
                 </Content>
             </Layout>
         </Layout>
@@ -66,7 +98,14 @@ import {mapState, mapMutations, mapGetters} from 'vuex'
 export default {
      data () {
             return {
-                isCollapsed: false
+                isCollapsed: false,
+                tag_checked:false,
+                tag_default_color:"#E8EAEC",
+                tag_checked_color:"#E7046A",
+                tag_list:[
+                    { name:"首页", router_url:'/home' },
+                    { name:"订单审核", router_url:'/view/audit' },
+                ]
             };
         },
         computed: {
@@ -105,11 +144,15 @@ export default {
             add_num (id) {
                 this.ADD_CART(id) //通过mapMutations 辅助函数获取
             },
+            tag_change_state(checked, name){
+                this.tag_checked = checked;
+                console.log(checked, name)
+            }
         }
 };
 </script>
 <style scoped>
- .layout{
+    .layout{
         border: 1px solid #d7dde4;
         background: #f5f7f9;
         position: relative;
@@ -144,5 +187,12 @@ export default {
         transition: font-size .2s ease .2s, transform .2s ease .2s;
         vertical-align: middle;
         font-size: 22px;
+    }
+
+    /* tag-views */
+    .tag_views{
+        height: 36px;
+        margin-bottom: 10px;
+        background-color: #F0F0F0;
     }
 </style>

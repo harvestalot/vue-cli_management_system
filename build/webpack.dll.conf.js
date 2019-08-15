@@ -9,6 +9,7 @@ const vendors = [
     'vue-cookie',
     'vuex',
     "iview",
+    "element-ui",
 ]
 module.exports = {
   // 你想要打包的模块的数组
